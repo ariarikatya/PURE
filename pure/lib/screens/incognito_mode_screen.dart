@@ -25,9 +25,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
     {'glasses': 7, 'price': '399 ₽', 'tag': null, 'discount': '-42%'},
   ];
 
-  static const Color background = Color(
-    0xFF2D295A,
-  ); // cardBackground заменён на background
+  static const Color background = Color(0xFF2D295A);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.3),
+              color: Colors.white.withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -106,7 +104,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
 
           const SizedBox(height: 24),
 
-          // Pricing options with cardBackground
+          // Pricing options
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
@@ -262,24 +260,29 @@ class _PlanCard extends StatelessWidget {
               child: Center(
                 child: SizedBox(
                   height: 36,
+                  width: 80,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Container(
+                        width: 80,
+                        height: 36,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(1000),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.red.withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
+                              color: Colors.red.withValues(alpha: 0.1),
+                              blurRadius: 7,
+                              spreadRadius: 0,
+                              offset: const Offset(0, 0),
                             ),
                           ],
                         ),
-                        child: Image.asset(
-                          'assets/images/sale.png',
-                          height: 36,
-                          fit: BoxFit.contain,
-                        ),
+                      ),
+                      Image.asset(
+                        'assets/images/sale.png',
+                        height: 36,
+                        fit: BoxFit.contain,
                       ),
                       Text(
                         tag!,
@@ -302,24 +305,29 @@ class _PlanCard extends StatelessWidget {
               child: Center(
                 child: SizedBox(
                   height: 36,
+                  width: 80,
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
                       Container(
+                        width: 80,
+                        height: 36,
                         decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(1000),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.red.withOpacity(0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 4),
+                              color: Colors.red.withValues(alpha: 0.1),
+                              blurRadius: 7,
+                              spreadRadius: 0,
+                              offset: const Offset(0, 0),
                             ),
                           ],
                         ),
-                        child: Image.asset(
-                          'assets/images/sale.png',
-                          height: 36,
-                          fit: BoxFit.contain,
-                        ),
+                      ),
+                      Image.asset(
+                        'assets/images/sale.png',
+                        height: 36,
+                        fit: BoxFit.contain,
                       ),
                       Text(
                         discount!,
