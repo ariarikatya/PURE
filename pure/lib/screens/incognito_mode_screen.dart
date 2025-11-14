@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pure/constants/app_colors.dart';
 import '../widgets/svg_icons.dart';
 
 class IncognitoModeScreen extends StatefulWidget {
@@ -24,10 +25,14 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
     {'glasses': 7, 'price': '399 ₽', 'tag': null, 'discount': '-42%'},
   ];
 
+  static const Color background = Color(
+    0xFF2D295A,
+  ); // cardBackground заменён на background
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: 424,
       decoration: const BoxDecoration(
         color: Color(0xFF1E1B4B),
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
@@ -45,19 +50,27 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             ),
           ),
 
-          // Close button
-          Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: const Icon(Icons.close, color: Colors.white),
-              onPressed: widget.onClose,
+          // SunglassesIcon по центру, кнопка закрытия справа
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+            child: Stack(
+              children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 22, top: 10),
+                    child: const SunglassesIcon(width: 170, height: 68),
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: widget.onClose,
+                  ),
+                ),
+              ],
             ),
-          ),
-
-          // Sunglasses icon
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 24),
-            child: const SunglassesIcon(width: 120, height: 50),
           ),
 
           // Title
@@ -65,42 +78,47 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             'РЕЖИМ ИНКОГНИТО НА 24 ЧАСА',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
               letterSpacing: 0.5,
             ),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 24),
 
           // Description
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Стань невидимкой в ленте и чатах, скрой\nобъявление и наслаждайся незамеченным',
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 14,
-                height: 1.5,
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Стань невидимкой в ленте и чатах, скрой\nобъявление и наслаждайся <Space> незамеченным',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.left,
               ),
-              textAlign: TextAlign.left,
             ),
           ),
 
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
-          // Pricing options
+          // Pricing options with cardBackground
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: List.generate(_plans.length, (index) {
                 return Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: index == 0 ? 0 : 6,
-                      right: index == _plans.length - 1 ? 0 : 6,
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      left: index == 0 ? 0 : 8,
+                      right: index == _plans.length - 1 ? 0 : 8,
                     ),
+                    height: 78,
                     child: _PlanCard(
                       isSelected: _selectedPlanIndex == index,
                       glasses: _plans[index]['glasses'],
@@ -112,6 +130,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
                           _selectedPlanIndex = index;
                         });
                       },
+                      cardBackground: AppColors.background,
                     ),
                   ),
                 );
@@ -120,17 +139,18 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
           ),
 
           const Spacer(),
-
+          const SizedBox(height: 16),
           // Purchase button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: SizedBox(
               width: double.infinity,
+              height: 50,
               child: ElevatedButton(
                 onPressed: widget.onPurchase,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFAA044A),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.zero,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
@@ -139,15 +159,13 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
                   'Купить',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
           ),
-
-          const SizedBox(height: 16),
 
           // Terms link
           TextButton(
@@ -161,8 +179,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
               ),
             ),
           ),
-
-          const SizedBox(height: 24),
         ],
       ),
     );
@@ -176,6 +192,7 @@ class _PlanCard extends StatelessWidget {
   final String? tag;
   final String? discount;
   final VoidCallback onTap;
+  final Color cardBackground;
 
   const _PlanCard({
     required this.isSelected,
@@ -184,6 +201,7 @@ class _PlanCard extends StatelessWidget {
     this.tag,
     this.discount,
     required this.onTap,
+    required this.cardBackground,
   });
 
   @override
@@ -196,29 +214,31 @@ class _PlanCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: isSelected
-                  ? Colors.white.withOpacity(0.15)
-                  : Colors.white.withOpacity(0.05),
+              color: cardBackground,
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                color: isSelected ? Colors.white : Colors.transparent,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.divider, width: 1),
             ),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      glasses.toString(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                    Container(
+                      width: 30,
+                      height: 24,
+                      alignment: Alignment.center,
+                      child: Text(
+                        glasses.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 4),
                     const EyeIcon(size: 24, color: Colors.amber),
                   ],
                 ),
@@ -227,8 +247,8 @@ class _PlanCard extends StatelessWidget {
                   price,
                   style: const TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -236,56 +256,58 @@ class _PlanCard extends StatelessWidget {
           ),
           if (tag != null)
             Positioned(
-              top: -12,
+              top: -18,
               left: 0,
               right: 0,
               child: Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF6B35), Color(0xFFFF8C42)],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    tag!,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: SizedBox(
+                  height: 36,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/sale.png',
+                        height: 36,
+                        fit: BoxFit.contain,
+                      ),
+                      Text(
+                        tag!,
+                        style: const TextStyle(
+                          color: AppColors.background,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
           if (discount != null)
             Positioned(
-              top: -12,
+              top: -18,
               left: 0,
               right: 0,
               child: Center(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFFF6B35), Color(0xFFFF8C42)],
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    discount!,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: SizedBox(
+                  height: 36,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/sale.png',
+                        height: 36,
+                        fit: BoxFit.contain,
+                      ),
+                      Text(
+                        discount!,
+                        style: const TextStyle(
+                          color: AppColors.background,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

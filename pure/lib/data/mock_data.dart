@@ -6,7 +6,7 @@ class MockData {
     Chat(
       id: '1',
       userName: 'Отлично выглядишь',
-      userAvatar: '👤',
+      userAvatar: 'avatar.jpg',
       lastMessage: 'Отлично выглядишь',
       timestamp: '23 ч 43 мин',
       hasUnread: false,

@@ -38,31 +38,51 @@ class _ChatsScreenState extends State<ChatsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // Top empty area
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              height: 135,
-              child: Container(),
+      body: Stack(
+        children: [
+          // Background
+          Container(color: Colors.grey[200]),
+          // Top SafeArea (for camera/time)
+          SafeArea(
+            bottom: false,
+            child: Container(
+              color: Colors.transparent,
+              height: MediaQuery.of(context).padding.top,
             ),
-
-            // Bottom panel
-            Positioned(
-              top: 135,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Container(
+          ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.75,
+            minChildSize: 0.75,
+            maxChildSize: 1.0,
+            builder: (context, scrollController) {
+              return Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top,
+                ),
                 decoration: const BoxDecoration(
                   color: AppColors.background,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                  border: Border(
+                    top: BorderSide(color: AppColors.divider, width: 1),
+                    bottom: BorderSide(color: AppColors.divider, width: 1),
+                    left: BorderSide(color: AppColors.divider, width: 1),
+                    right: BorderSide(color: AppColors.divider, width: 1),
+                  ),
                 ),
                 child: Column(
                   children: [
+                    // Drag handle
+                    Padding(
+                      padding: const EdgeInsets.only(top: 12, bottom: 8),
+                      child: Container(
+                        width: 40,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[400],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                      ),
+                    ),
                     // Header
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -75,8 +95,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             'ЧАТЫ',
                             style: TextStyle(
                               color: AppColors.textPrimary,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w400,
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -86,9 +106,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
                               const Text(
                                 'OFF',
                                 style: TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.textPrimary,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -115,65 +135,91 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         ],
                       ),
                     ),
-
-                    // Likes
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
-                      ),
-                      color: Colors.transparent,
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF5B21B6),
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.favorite,
-                              color: Colors.white,
-                              size: 20,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          const Expanded(
-                            child: Text(
-                              '44 человека тебя лайкнули',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          const Icon(
-                            Icons.circle,
-                            color: Colors.white,
-                            size: 8,
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    // Chat list
+                    // List with Likes as a scrollable item
                     Expanded(
                       child: ListView.builder(
+                        controller: scrollController,
                         padding: EdgeInsets.zero,
-                        itemCount: MockData.chats.length,
+                        itemCount: MockData.chats.length + 1,
                         itemBuilder: (context, index) {
+                          if (index == 0) {
+                            // Likes item as a chat-like list item
+                            return InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 16,
+                                ),
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: AppColors.divider,
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 56,
+                                      height: 56,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFF5B21B6),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.favorite,
+                                          color: AppColors.purple,
+                                          size: 28,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: const [
+                                          Text(
+                                            '44 человека тебя лайкнули',
+                                            style: TextStyle(
+                                              color: AppColors.textPrimary,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 8,
+                                      height: 8,
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }
+                          final chatIndex = index - 1;
                           return _ChatListItem(
-                            chat: MockData.chats[index],
-                            avatarIndex: index,
+                            chat: MockData.chats[chatIndex],
+                            avatarIndex: chatIndex,
                             onTap: () {
                               showModalBottomSheet(
                                 context: context,
                                 backgroundColor: Colors.transparent,
                                 isScrollControlled: true,
                                 builder: (context) => ChatDetailScreen(
-                                  chat: MockData.chats[index],
-                                  avatarIndex: index,
+                                  chat: MockData.chats[chatIndex],
+                                  avatarIndex: chatIndex,
                                 ),
                               );
                             },
@@ -181,52 +227,61 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         },
                       ),
                     ),
-
-                    // Bottom nav inside panel
-                    _buildBottomNav(),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
       ),
+      bottomNavigationBar: _buildBottomNav(),
     );
   }
 
   Widget _buildBottomNav() {
+    final bottomInset = MediaQuery.of(context).padding.bottom;
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.cardBackground,
-        border: Border(top: BorderSide(color: AppColors.divider, width: 1)),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _NavItemSvg(
-              icon: GridIcon(size: 24, color: AppColors.purple),
-              isActive: false,
-              onTap: () {},
+      height: 60 + bottomInset,
+      color: AppColors.background,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 60,
+            decoration: const BoxDecoration(
+              color: AppColors.background,
+              border: Border(
+                top: BorderSide(color: AppColors.divider, width: 1),
+              ),
             ),
-            _NavItemSvg(
-              icon: ChatIcon(size: 20, color: Colors.black),
-              isActive: true,
-              onTap: () {},
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _NavItem(
+                  icon: GridIcon(size: 24, color: AppColors.purple),
+                  isActive: false,
+                  onTap: () {},
+                ),
+                _NavItem(
+                  icon: ChatIcon(size: 20, color: Colors.yellow),
+                  isActive: true,
+                  onTap: () {},
+                ),
+                _NavItem(
+                  icon: HeartIcon(size: 24, color: AppColors.purple),
+                  isActive: false,
+                  onTap: () {},
+                ),
+                _NavItem(
+                  icon: SettingsIcon(size: 24, color: AppColors.purple),
+                  isActive: false,
+                  onTap: () {},
+                ),
+              ],
             ),
-            _NavItemSvg(
-              icon: HeartIcon(size: 24, color: AppColors.purple),
-              isActive: false,
-              onTap: () {},
-            ),
-            _NavItemSvg(
-              icon: SettingsIcon(size: 24, color: AppColors.purple),
-              isActive: false,
-              onTap: () {},
-            ),
-          ],
-        ),
+          ),
+          SizedBox(height: bottomInset),
+        ],
       ),
     );
   }
@@ -306,12 +361,12 @@ class _ChatListItem extends StatelessWidget {
   }
 }
 
-class _NavItemSvg extends StatelessWidget {
+class _NavItem extends StatelessWidget {
   final Widget icon;
   final bool isActive;
   final VoidCallback onTap;
 
-  const _NavItemSvg({
+  const _NavItem({
     required this.icon,
     required this.isActive,
     required this.onTap,
@@ -326,15 +381,14 @@ class _NavItemSvg extends StatelessWidget {
           width: 52,
           height: 44,
           alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: const Color(0xFFF2C94C),
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: icon,
+          child: Center(child: icon),
         ),
       );
     }
-
-    return IconButton(icon: icon, onPressed: onTap);
+    return IconButton(
+      icon: Center(child: icon),
+      onPressed: onTap,
+      splashRadius: 26,
+    );
   }
 }
