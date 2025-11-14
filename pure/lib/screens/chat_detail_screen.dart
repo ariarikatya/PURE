@@ -115,47 +115,41 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         height: MediaQuery.of(context).size.height,
         child: Column(
           children: [
+            // Spacer на 82 пикселя от верха до фиолетового баннера
+            SizedBox(height: 43),
+            // Фиолетовый баннер
             Container(
-              height: 82,
-              color: Colors.transparent,
-              child: Stack(
+              height: 39,
+              width: double.infinity,
+              color: AppColors.purple,
+              child: Row(
                 children: [
-                  Positioned(
-                    top: 16,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      height: 39,
-                      width: double.infinity,
-                      color: AppColors.purple,
-                      child: Row(
-                        children: [
-                          const SizedBox(width: 16),
-                          const ChatIcon(size: 24, color: Colors.white),
-                          const SizedBox(width: 12),
-                          SizedBox(
-                            width: 300,
-                            child: const Text(
-                              '2 общих соблазна',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.close, color: Colors.white),
-                            onPressed: () => Navigator.of(context).pop(),
-                          ),
-                          const SizedBox(width: 8),
-                        ],
+                  const SizedBox(width: 16),
+                  Image.asset(
+                    'assets/images/rocket.png',
+                    height: 36,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(width: 12),
+                  SizedBox(
+                    width: 300,
+                    child: const Text(
+                      '2 общих соблазна',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.white),
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  const SizedBox(width: 8),
                 ],
               ),
             ),
@@ -349,8 +343,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         ),
       ),
     );
-
-    // ...контент теперь внутри Stack, удаляем дублирующийся код...
   }
 }
 

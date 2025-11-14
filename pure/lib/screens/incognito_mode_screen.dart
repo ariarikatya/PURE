@@ -265,10 +265,21 @@ class _PlanCard extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/sale.png',
-                        height: 36,
-                        fit: BoxFit.contain,
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          'assets/images/sale.png',
+                          height: 36,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                       Text(
                         tag!,
@@ -294,10 +305,21 @@ class _PlanCard extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      Image.asset(
-                        'assets/images/sale.png',
-                        height: 36,
-                        fit: BoxFit.contain,
+                      Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.red.withOpacity(0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Image.asset(
+                          'assets/images/sale.png',
+                          height: 36,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                       Text(
                         discount!,
