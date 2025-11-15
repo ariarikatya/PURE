@@ -40,9 +40,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       backgroundColor: Colors.grey[200],
       body: Stack(
         children: [
-          // Background
           Container(color: Colors.grey[200]),
-          // Top SafeArea (for camera/time)
           SafeArea(
             bottom: false,
             child: Container(
@@ -71,7 +69,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
                 child: Column(
                   children: [
-                    // Drag handle
                     Padding(
                       padding: const EdgeInsets.only(top: 12, bottom: 8),
                       child: Container(
@@ -83,7 +80,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         ),
                       ),
                     ),
-                    // Header
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 16,
@@ -136,7 +132,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         ],
                       ),
                     ),
-                    // List with Likes as a scrollable item
                     Expanded(
                       child: ListView.builder(
                         controller: scrollController,
@@ -144,7 +139,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                         itemCount: MockData.chats.length + 1,
                         itemBuilder: (context, index) {
                           if (index == 0) {
-                            // Likes item as a chat-like list item
                             return InkWell(
                               onTap: () {},
                               child: Container(

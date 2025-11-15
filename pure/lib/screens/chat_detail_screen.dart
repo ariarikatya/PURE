@@ -99,7 +99,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
-          // Верхний блок: стрелка, аватар, три точки
           SafeArea(
             top: true,
             bottom: false,
@@ -133,7 +132,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           ),
 
           const SizedBox(height: 47),
-          // Фиолетовый баннер с картинкой и крестиком
           Container(
             height: 39,
             width: double.infinity,
@@ -168,7 +166,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
           ),
 
           const SizedBox(height: 16),
-          // Чат
           Expanded(
             child: Container(
               color: Colors.grey[200],
@@ -207,7 +204,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             ),
                     ),
                   ),
-                  // Ввод сообщений
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: const BoxDecoration(
@@ -272,7 +268,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       ],
                     ),
                   ),
-                  // Панель стикеров
                   if (_showEmojiPanel)
                     Container(
                       height: 250,

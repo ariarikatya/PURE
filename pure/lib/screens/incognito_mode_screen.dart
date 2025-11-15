@@ -17,7 +17,7 @@ class IncognitoModeScreen extends StatefulWidget {
 }
 
 class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
-  int _selectedPlanIndex = 1; // Middle option selected by default
+  int _selectedPlanIndex = 1;
 
   final List<Map<String, dynamic>> _plans = [
     {'glasses': 1, 'price': '99 ₽', 'tag': null},
@@ -40,7 +40,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Handle bar
             Container(
               margin: const EdgeInsets.only(top: 12),
               width: 40,
@@ -51,7 +50,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
               ),
             ),
 
-            // SunglassesIcon по центру, кнопка закрытия справа
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: Stack(
@@ -74,7 +72,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
               ),
             ),
 
-            // Title
             const Text(
               'РЕЖИМ ИНКОГНИТО НА 24 ЧАСА',
               style: TextStyle(
@@ -88,7 +85,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
 
             const SizedBox(height: 16),
 
-            // Description
             const Padding(
               padding: EdgeInsets.only(left: 16, right: 16),
               child: Align(
@@ -107,7 +103,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
 
             const SizedBox(height: 20),
 
-            // Pricing options
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -135,7 +130,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             ),
 
             const SizedBox(height: 24),
-            // Purchase button
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
@@ -162,7 +156,6 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
               ),
             ),
 
-            // Terms link
             TextButton(
               onPressed: () {},
               child: const Text(

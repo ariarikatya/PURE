@@ -1,6 +1,4 @@
-/// Mock avatar URLs for chat profiles
 class AvatarData {
-  // List of portrait images from unsplash
   static const List<String> mockAvatarUrls = [
     'assets/images/avatar.jpg',
     'assets/images/avatar2.jpg',
@@ -10,7 +8,6 @@ class AvatarData {
     'assets/images/avatar6.jpg',
   ];
 
-  /// Get avatar URL by index
   static String getAvatarUrl(int index) {
     return mockAvatarUrls[index % mockAvatarUrls.length];
   }
