@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import '../constants/app_colors.dart';
-import '../data/mock_data.dart';
 import '../models/chat.dart';
 import '../models/chat_message.dart';
 import '../widgets/user_avatar.dart';
@@ -20,12 +19,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
   bool _showEmojiPanel = false;
   final TextEditingController _messageController = TextEditingController();
   final List<ChatMessage> _messages = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _messages.addAll(MockData.getMessagesForChat(widget.chat.id));
-  }
 
   @override
   void dispose() {
@@ -63,16 +56,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
         ChatMessage(
           id: DateTime.now().millisecondsSinceEpoch.toString(),
           senderId: 'me',
-          text: '🎤 Голосовое сообщение (мок)',
+          text: '🎤 Голосовое сообщение',
           timestamp: DateTime.now(),
           isMe: true,
         ),
       );
     });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Голосовое сообщение отправлено (мок)')),
-    );
   }
 
   Future<void> _pickFile() async {
@@ -122,7 +111,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     icon: const Icon(
                       Icons.arrow_back_ios_new,
                       color: AppColors.textPrimary,
-                    ), // цвет textPrimary
+                    ),
                     onPressed: () => Navigator.pop(context),
                   ),
                   UserAvatar(
@@ -143,7 +132,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             ),
           ),
 
-          const SizedBox(height: 47), // отступ до фиолетового баннера
+          const SizedBox(height: 47),
           // Фиолетовый баннер с картинкой и крестиком
           Container(
             height: 39,
@@ -178,23 +167,35 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             ),
           ),
 
-          const SizedBox(height: 16), // отступ снизу баннера
+          const SizedBox(height: 16),
           // Чат
           Expanded(
             child: Container(
-              decoration: const BoxDecoration(color: AppColors.background),
+              color: Colors.grey[200],
               child: Column(
                 children: [
                   Expanded(
                     child: Container(
-                      color: AppColors.cardBackground,
+                      decoration: const BoxDecoration(
+                        color: AppColors.cardBackground,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(8),
+                          topRight: Radius.circular(8),
+                        ),
+                      ),
                       child: _messages.isEmpty
-                          ? const Center(
-                              child: Text(
-                                'Начни общение',
-                                style: TextStyle(
-                                  color: AppColors.textSecondary,
-                                  fontSize: 18,
+                          ? Container(
+                              alignment: Alignment.topCenter,
+                              padding: const EdgeInsets.only(top: 51),
+                              child: SizedBox(
+                                width: 300,
+                                child: const Text(
+                                  'Начни общение',
+                                  style: TextStyle(
+                                    color: AppColors.textSecondary,
+                                    fontSize: 12,
+                                  ),
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
                             )
@@ -271,6 +272,64 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                       ],
                     ),
                   ),
+                  // Панель стикеров
+                  if (_showEmojiPanel)
+                    Container(
+                      height: 250,
+                      color: AppColors.background,
+                      child: GridView.builder(
+                        padding: const EdgeInsets.all(16),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 5,
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                            ),
+                        itemCount: 20,
+                        itemBuilder: (context, index) {
+                          final stickers = [
+                            '😀',
+                            '😂',
+                            '❤️',
+                            '👍',
+                            '🎉',
+                            '🔥',
+                            '✨',
+                            '💯',
+                            '🎈',
+                            '🌟',
+                            '😎',
+                            '🤔',
+                            '😍',
+                            '🥳',
+                            '💪',
+                            '👏',
+                            '🙌',
+                            '💕',
+                            '🌈',
+                            '⭐',
+                          ];
+                          return GestureDetector(
+                            onTap: () {
+                              _messageController.text +=
+                                  stickers[index % stickers.length];
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.cardBackground,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  stickers[index % stickers.length],
+                                  style: const TextStyle(fontSize: 32),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   Container(
                     height: MediaQuery.of(context).padding.bottom,
                     color: AppColors.background,

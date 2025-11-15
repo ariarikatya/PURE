@@ -120,13 +120,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: isIncognitoMode
-                                        ? AppColors.purple
+                                        ? AppColors.divider
                                         : AppColors.divider,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  child: const EyeIcon(
-                                    size: 30,
-                                    color: Colors.amber,
+                                  child: Image.asset(
+                                    'assets/images/sungy.png',
+                                    height: 12,
+                                    fit: BoxFit.contain,
                                   ),
                                 ),
                               ),
