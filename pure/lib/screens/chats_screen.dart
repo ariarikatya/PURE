@@ -125,7 +125,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const EyeIcon(
-                                    size: 20,
+                                    size: 30,
                                     color: Colors.amber,
                                   ),
                                 ),
@@ -165,7 +165,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                                       width: 56,
                                       height: 56,
                                       decoration: const BoxDecoration(
-                                        color: Color(0xFF5B21B6),
+                                        color: Color(0xFF1F093A),
                                         shape: BoxShape.circle,
                                       ),
                                       child: Center(
@@ -213,13 +213,12 @@ class _ChatsScreenState extends State<ChatsScreen> {
                             chat: MockData.chats[chatIndex],
                             avatarIndex: chatIndex,
                             onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                isScrollControlled: true,
-                                builder: (context) => ChatDetailScreen(
-                                  chat: MockData.chats[chatIndex],
-                                  avatarIndex: chatIndex,
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => ChatDetailScreen(
+                                    chat: MockData.chats[chatIndex],
+                                    avatarIndex: chatIndex,
+                                  ),
                                 ),
                               );
                             },
@@ -326,7 +325,7 @@ class _ChatListItem extends StatelessWidget {
                       Text(
                         chat.timestamp,
                         style: const TextStyle(
-                          color: AppColors.textSecondary,
+                          color: AppColors.textPrimary,
                           fontSize: 12,
                         ),
                       ),

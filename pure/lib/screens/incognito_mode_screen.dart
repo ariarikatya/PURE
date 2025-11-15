@@ -83,7 +83,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 16),
 
           // Description
           const Padding(
@@ -102,7 +102,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
             ),
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
 
           // Pricing options
           Padding(
@@ -116,7 +116,7 @@ class _IncognitoModeScreenState extends State<IncognitoModeScreen> {
                       left: index == 0 ? 0 : 8,
                       right: index == _plans.length - 1 ? 0 : 8,
                     ),
-                    height: 78,
+                    height: 90,
                     child: _PlanCard(
                       isSelected: _selectedPlanIndex == index,
                       glasses: _plans[index]['glasses'],
